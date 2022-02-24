@@ -12,9 +12,15 @@ function* generate_prime_numbers(): Generator<number> {
     }
 }
 
+function* generate_prime_numbers_until(generator: () => any, limit: number) : Generator<number> {
+    for(let prime_number of generator()) {
+        if(prime_number > limit) { break; }
+        yield prime_number;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    for(let prime_number of generate_prime_numbers()) {
-        if(prime_number > 1000) { break; }
+    for(let prime_number of generate_prime_numbers_until(generate_prime_numbers, 100)) {
         console.log(prime_number);
     }
 });
