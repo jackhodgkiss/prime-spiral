@@ -1,4 +1,4 @@
-function* generate_prime_numbers(): Generator<number> {
+function* generate_primes(): Generator<number> {
     let potential_prime: number = 2;
     if(potential_prime == 2) { yield 2; }
     if(potential_prime % 2 == 0) { potential_prime += 1; }
@@ -12,7 +12,7 @@ function* generate_prime_numbers(): Generator<number> {
     }
 }
 
-function* generate_prime_numbers_until(generator: () => any, limit: number) : Generator<number> {
+function* generate_primes_until(generator: () => Generator<number>, limit: number) : Generator<number> {
     for(let prime_number of generator()) {
         if(prime_number > limit) { break; }
         yield prime_number;
@@ -20,7 +20,7 @@ function* generate_prime_numbers_until(generator: () => any, limit: number) : Ge
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    for(let prime_number of generate_prime_numbers_until(generate_prime_numbers, 100)) {
+    for(let prime_number of generate_primes_until(generate_primes, 100)) {
         console.log(prime_number);
     }
 });
