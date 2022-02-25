@@ -5,8 +5,12 @@
 // 3. Alter the visual appearance of `cells` if they meet certain criteria (prime, mersenne prime)
 
 class Application {
+    canvas: HTMLCanvasElement;
+    context: CanvasRenderingContext2D;
     constructor() {
-        console.log("Hello, World!");
+        this.canvas = document.getElementById("application-canvas") as HTMLCanvasElement;
+        this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        this.canvas.setAttribute("style", "background-color: black;");
     }
 }
 
