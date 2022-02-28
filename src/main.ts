@@ -8,6 +8,7 @@ class Cell {
     is_prime: boolean;
     abscissa: number;
     ordinate: number;
+    size: number = 5;
     constructor(is_prime: boolean, abscissa: number, ordinate: number) {
         this.is_prime = is_prime;
         this.abscissa = abscissa;
@@ -15,7 +16,8 @@ class Cell {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.rect(this.abscissa, this.ordinate, 50, 50);
+        context.fillStyle = "white";
+        context.rect(this.abscissa, this.ordinate, this.size, this.size);
         context.fill();
     }
 }
@@ -26,6 +28,7 @@ class Application {
     constructor() {
         this.canvas = document.getElementById("application-canvas") as HTMLCanvasElement;
         this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        this.canvas.setAttribute("style", "background-color: black");
         this.draw();
     }
     draw(): void {
