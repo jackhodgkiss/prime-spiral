@@ -8,7 +8,7 @@ class Cell {
     is_prime: boolean;
     abscissa: number;
     ordinate: number;
-    size: number = 5;
+    size: number = 12;
     constructor(is_prime: boolean, abscissa: number, ordinate: number) {
         this.is_prime = is_prime;
         this.abscissa = abscissa;
@@ -16,9 +16,12 @@ class Cell {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        context.fillStyle = "white";
-        context.rect(this.abscissa, this.ordinate, this.size, this.size);
-        context.fill();
+        if(!this.is_prime) {
+            context.fillStyle = "white";
+        } else {
+            context.fillStyle = "black";
+        }
+        context.fillRect(this.abscissa, this.ordinate, this.size, this.size);
     }
 }
 
@@ -32,8 +35,18 @@ class Application {
         this.draw();
     }
     draw(): void {
-        const cell = new Cell(false, 50, 50);
-        cell.draw(this.context);
+        let width: number = 600 / 15;
+        for (let row = 0; row < width; row++) {
+            for (let column = 0; column < width; column++) {
+                if(row == 19 && column == 19) {
+                    const cell = new Cell(true, row * 15, column * 15);
+                    cell.draw(this.context);
+                } else {
+                    const cell = new Cell(false, row * 15, column * 15);
+                    cell.draw(this.context);
+                }
+            }
+        }
     }
 }
 
