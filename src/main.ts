@@ -8,7 +8,7 @@ class Cell {
     is_prime: boolean;
     abscissa: number;
     ordinate: number;
-    size: number = 10;
+    size: number = 15;
     constructor(is_prime: boolean, abscissa: number, ordinate: number) {
         this.is_prime = is_prime;
         this.abscissa = abscissa;
@@ -16,7 +16,7 @@ class Cell {
     }
 
     draw(context: CanvasRenderingContext2D): void {
-        if(!this.is_prime) {
+        if(this.is_prime) {
             context.fillStyle = "white";
         } else {
             context.fillStyle = "black";
@@ -48,13 +48,32 @@ class Application {
         return value;
     }
 
+    factors_of_n(value: number): number[] {
+        const factors = [];
+        for (let divisor = 3; divisor < Math.sqrt(value) + 1; divisor += 2) {
+            const quotient = Math.trunc(value / divisor);
+            const remainder = value % divisor;
+            if(remainder == 0) {
+                factors.push(divisor, quotient)
+            }
+        }
+        return factors;
+    }
+    
+    is_prime(value: number): boolean {
+        return value == 1 ? false : value % 2 == 0 ? false : !this.factors_of_n(value).length;
+    }
+
+
     draw(): void {
         const canvas_size: number = 600;
-        const cell_size: number = 15;
+        const cell_size: number = 3;
         this.context.translate(canvas_size / 2, canvas_size / 2);
         for (let row = - (canvas_size / cell_size) / 2; row <= (canvas_size / cell_size) / 2; row++) {
             for (let column = - (canvas_size / cell_size) / 2; column <= (canvas_size / cell_size) / 2; column++) {
-                new Cell(false, (column * cell_size) + 2, (row * cell_size) + 2).draw(this.context);
+                const value = this.coordinates_to_value(row, column);
+                const is_prime: boolean = this.is_prime(value);
+                new Cell(is_prime, (column * cell_size) + 2, (row * cell_size) + 2).draw(this.context);
             }
         }
     }
