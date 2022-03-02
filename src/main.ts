@@ -34,19 +34,22 @@ class Application {
         this.canvas.setAttribute("style", "background-color: black");
         this.draw();
     }
-    draw(): void {
-        let width: number = 600 / 15;
-        for (let row = 0; row < width; row++) {
-            for (let column = 0; column < width; column++) {
-                if(row == 19 && column == 19) {
-                    const cell = new Cell(true, row * 15, column * 15);
-                    cell.draw(this.context);
-                } else {
-                    const cell = new Cell(false, row * 15, column * 15);
-                    cell.draw(this.context);
-                }
-            }
+
+    coordinates_to_value(row: number, column: number): number {
+        let value: number = 0;
+        const layer: number = Math.max(Math.abs(row), Math.abs(column));
+        const smallest_layer_element: number = Math.pow(3 + (layer - 2) * 2, 2) + 1;
+        const largest_layer_element: number = Math.pow(3 + (layer - 1) * 2, 2);
+        if (column == -layer || row == layer) {
+            value = largest_layer_element - (Math.abs(row - layer) + Math.abs(column - layer));
+        } else {
+            value = smallest_layer_element + (Math.abs(row - (layer - 1)) + Math.abs(column - layer));
         }
+        return value;
+    }
+
+    draw(): void {
+        
     }
 }
 
