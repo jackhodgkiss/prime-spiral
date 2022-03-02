@@ -8,7 +8,7 @@ class Cell {
     is_prime: boolean;
     abscissa: number;
     ordinate: number;
-    size: number = 12;
+    size: number = 10;
     constructor(is_prime: boolean, abscissa: number, ordinate: number) {
         this.is_prime = is_prime;
         this.abscissa = abscissa;
@@ -49,7 +49,14 @@ class Application {
     }
 
     draw(): void {
-        
+        const canvas_size: number = 600;
+        const cell_size: number = 15;
+        this.context.translate(canvas_size / 2, canvas_size / 2);
+        for (let row = - (canvas_size / cell_size) / 2; row <= (canvas_size / cell_size) / 2; row++) {
+            for (let column = - (canvas_size / cell_size) / 2; column <= (canvas_size / cell_size) / 2; column++) {
+                new Cell(false, (column * cell_size) + 2, (row * cell_size) + 2).draw(this.context);
+            }
+        }
     }
 }
 
