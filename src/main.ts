@@ -50,7 +50,7 @@ class Application {
 
     is_prime(value: number): boolean {
         if (value == 0 || value == 1) { return false; }
-        if (value == 2) { return true; }
+        if (value == 2 || value == 3) { return true; }
         if (value % 2 == 0) { return false; }
         let result: boolean = true;
         for (let divisor = 3; divisor <= Math.sqrt(value) + 2; divisor += 2) {
