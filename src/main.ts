@@ -48,26 +48,25 @@ class Application {
         return value;
     }
 
-    factors_of_n(value: number): number[] {
-        const factors = [];
-        for (let divisor = 3; divisor < Math.sqrt(value) + 1; divisor += 2) {
-            const quotient = Math.trunc(value / divisor);
+    is_prime(value: number): boolean {
+        if (value == 0 || value == 1) { return false; }
+        if (value == 2) { return true; }
+        if (value % 2 == 0) { return false; }
+        let result: boolean = true;
+        for (let divisor = 3; divisor <= Math.sqrt(value) + 2; divisor += 2) {
             const remainder = value % divisor;
             if(remainder == 0) {
-                factors.push(divisor, quotient)
+                result = false;
+                break;
             }
         }
-        return factors;
-    }
-    
-    is_prime(value: number): boolean {
-        return value == 1 ? false : value % 2 == 0 ? false : !this.factors_of_n(value).length;
+        return result;
     }
 
 
     draw(): void {
         const canvas_size: number = 600;
-        const cell_size: number = 3;
+        const cell_size: number = 1;
         this.context.translate(canvas_size / 2, canvas_size / 2);
         for (let row = - (canvas_size / cell_size) / 2; row <= (canvas_size / cell_size) / 2; row++) {
             for (let column = - (canvas_size / cell_size) / 2; column <= (canvas_size / cell_size) / 2; column++) {
