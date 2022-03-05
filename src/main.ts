@@ -8,11 +8,12 @@ class Cell {
     is_prime: boolean;
     abscissa: number;
     ordinate: number;
-    size: number = 15;
-    constructor(is_prime: boolean, abscissa: number, ordinate: number) {
+    size: number;
+    constructor(is_prime: boolean, abscissa: number, ordinate: number, size: number) {
         this.is_prime = is_prime;
         this.abscissa = abscissa;
         this.ordinate = ordinate;
+        this.size = size;
     }
 
     draw(context: CanvasRenderingContext2D): void {
@@ -74,7 +75,7 @@ class Application {
             for (let column = - (canvas_size / this.cell_size) / 2; column <= (canvas_size / this.cell_size) / 2; column++) {
                 const value = this.coordinates_to_value(row, column);
                 const is_prime: boolean = this.is_prime(value);
-                new Cell(is_prime, (column * this.cell_size) + 2, (row * this.cell_size) + 2).draw(this.context);
+                new Cell(is_prime, (column * this.cell_size) + 2, (row * this.cell_size) + 2, this.cell_size).draw(this.context);
             }
         }
         this.context.restore();
