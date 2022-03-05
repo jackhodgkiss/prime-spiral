@@ -79,5 +79,11 @@ class Application {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const cell_size_field = document.getElementById("cell-size") as HTMLInputElement;
+    cell_size_field.value = "1";
     new Application();
 });
+
+let handle_controls = () => {
+    new Application();
+}
