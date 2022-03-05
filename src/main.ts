@@ -67,6 +67,7 @@ class Application {
     draw(): void {
         const canvas_size: number = 600;
         const cell_size: number = 1;
+        this.context.save();
         this.context.translate(canvas_size / 2, canvas_size / 2);
         for (let row = - (canvas_size / cell_size) / 2; row <= (canvas_size / cell_size) / 2; row++) {
             for (let column = - (canvas_size / cell_size) / 2; column <= (canvas_size / cell_size) / 2; column++) {
@@ -75,6 +76,7 @@ class Application {
                 new Cell(is_prime, (column * cell_size) + 2, (row * cell_size) + 2).draw(this.context);
             }
         }
+        this.context.restore();
     }
 }
 
