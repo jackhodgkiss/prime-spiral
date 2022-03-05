@@ -28,10 +28,12 @@ class Cell {
 class Application {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
-    constructor() {
+    cell_size: number;
+    constructor(cell_size: number = 1) {
         this.canvas = document.getElementById("application-canvas") as HTMLCanvasElement;
         this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         this.canvas.setAttribute("style", "background-color: black");
+        this.cell_size = cell_size;
         this.draw();
     }
 
@@ -66,14 +68,13 @@ class Application {
 
     draw(): void {
         const canvas_size: number = 600;
-        const cell_size: number = 1;
         this.context.save();
         this.context.translate(canvas_size / 2, canvas_size / 2);
-        for (let row = - (canvas_size / cell_size) / 2; row <= (canvas_size / cell_size) / 2; row++) {
-            for (let column = - (canvas_size / cell_size) / 2; column <= (canvas_size / cell_size) / 2; column++) {
+        for (let row = - (canvas_size / this.cell_size) / 2; row <= (canvas_size / this.cell_size) / 2; row++) {
+            for (let column = - (canvas_size / this.cell_size) / 2; column <= (canvas_size / this.cell_size) / 2; column++) {
                 const value = this.coordinates_to_value(row, column);
                 const is_prime: boolean = this.is_prime(value);
-                new Cell(is_prime, (column * cell_size) + 2, (row * cell_size) + 2).draw(this.context);
+                new Cell(is_prime, (column * this.cell_size) + 2, (row * this.cell_size) + 2).draw(this.context);
             }
         }
         this.context.restore();
@@ -87,5 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let handle_controls = () => {
-    new Application();
+    const cell_size_field = document.getElementById("cell-size") as HTMLInputElement;
+    new Application(parseInt(cell_size_field.value));
 }
