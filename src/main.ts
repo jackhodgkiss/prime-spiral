@@ -69,10 +69,11 @@ class Application {
 
     draw(): void {
         const canvas_size: number = 600;
+        const half_canvas_cell: number = Math.floor((canvas_size / this.cell_size) / 2);
         this.context.save();
         this.context.translate(canvas_size / 2, canvas_size / 2);
-        for (let row = - (canvas_size / this.cell_size) / 2; row <= (canvas_size / this.cell_size) / 2; row++) {
-            for (let column = - (canvas_size / this.cell_size) / 2; column <= (canvas_size / this.cell_size) / 2; column++) {
+        for (let row = -half_canvas_cell; row <= half_canvas_cell; row++) {
+            for (let column = -half_canvas_cell; column <= half_canvas_cell; column++) {
                 const value = this.coordinates_to_value(row, column);
                 const is_prime: boolean = this.is_prime(value);
                 new Cell(is_prime, (column * this.cell_size) + 2, (row * this.cell_size) + 2, this.cell_size).draw(this.context);
