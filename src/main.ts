@@ -4,6 +4,8 @@
 
 // 3. Alter the visual appearance of `cells` if they meet certain criteria (prime, mersenne prime)
 
+let application: Application;
+
 class Cell {
     is_prime: boolean;
     abscissa: number;
@@ -40,6 +42,7 @@ class Application {
         this.row_offset = row_offset;
         this.column_offset = column_offset;
         this.draw();
+        this.register_event_listeners();
     }
 
     coordinates_to_value(row: number, column: number): number {
@@ -53,6 +56,18 @@ class Application {
             value = smallest_layer_element + (Math.abs(row - (layer - 1)) + Math.abs(column - layer));
         }
         return value;
+    }
+
+    register_event_listeners() {
+        this.canvas.addEventListener("click", this.on_click);
+    }
+
+    on_click(event: MouseEvent): void {
+        console.log(event.offsetX);
+    }
+
+    unregister_event_listeners() {
+        this.canvas.removeEventListener("click", this.on_click);
     }
 
     is_prime(value: number): boolean {
@@ -95,12 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
     row_field.value = "0";
     const column_field = document.getElementById("column") as HTMLInputElement;
     column_field.value = "0";
-    new Application();
+    application = new Application();
 });
 
 let handle_controls = () => {
     const cell_size_field = document.getElementById("cell-size") as HTMLInputElement;
     const row_field = document.getElementById("row") as HTMLInputElement;
     const column_field = document.getElementById("column") as HTMLInputElement;
-    new Application(parseInt(row_field.value), parseInt(column_field.value), parseInt(cell_size_field.value));
+    application.unregister_event_listeners();
+    application = new Application(parseInt(row_field.value), parseInt(column_field.value), parseInt(cell_size_field.value));
 }
