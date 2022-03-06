@@ -77,15 +77,18 @@ class Application {
         const selected_column = (Math.floor(event.offsetX / cell_size) - half_canvas_cell) + column_offset;
         const selected_column_span = document.getElementById("selected-column") as HTMLSpanElement;
         selected_column_span.textContent = `Selected Column: ${selected_column}`;
+        const selected_value = Application.coordinates_to_value(selected_row, selected_column)
         const selected_value_span = document.getElementById("selected-value") as HTMLSpanElement;
-        selected_value_span.textContent = `Selected Value: ${Application.coordinates_to_value(selected_row, selected_column)}`
+        selected_value_span.textContent = `Selected Value: ${selected_value}`
+        const is_prime_span = document.getElementById("is-prime") as HTMLSpanElement;
+        is_prime_span.textContent = Application.is_prime(selected_value) ? "Is Prime: True" : "Is Prime: False";
     }
 
     unregister_event_listeners() {
         this.canvas.removeEventListener("click", this.on_click);
     }
 
-    is_prime(value: number): boolean {
+    static is_prime(value: number): boolean {
         if (value == 0 || value == 1) { return false; }
         if (value == 2 || value == 3) { return true; }
         if (value % 2 == 0) { return false; }
@@ -109,7 +112,7 @@ class Application {
         for (let row = this.row_offset + (half_canvas_cell * -1); row <= this.row_offset + half_canvas_cell; row++) {
             for (let column = this.column_offset + (half_canvas_cell * - 1); column <= this.column_offset + half_canvas_cell; column++) {
                 const value = Application.coordinates_to_value(row, column);
-                const is_prime: boolean = this.is_prime(value);
+                const is_prime: boolean = Application.is_prime(value);
                 new Cell(is_prime, (column - this.column_offset) * this.cell_size, (row - this.row_offset) * this.cell_size, this.cell_size).draw(this.context);
             }
         }
