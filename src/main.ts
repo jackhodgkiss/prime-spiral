@@ -30,11 +30,15 @@ class Application {
     canvas: HTMLCanvasElement;
     context: CanvasRenderingContext2D;
     cell_size: number;
-    constructor(cell_size: number = 1) {
+    row_offset: number;
+    column_offset: number;
+    constructor(row_offset: number = 0, column_offset: number = 0, cell_size: number = 1) {
         this.canvas = document.getElementById("application-canvas") as HTMLCanvasElement;
         this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
         this.canvas.setAttribute("style", "background-color: black");
         this.cell_size = cell_size;
+        this.row_offset = row_offset;
+        this.column_offset = column_offset;
         this.draw();
     }
 
@@ -70,13 +74,14 @@ class Application {
     draw(): void {
         const canvas_size: number = 600;
         const half_canvas_cell: number = Math.floor((canvas_size / this.cell_size) / 2);
+        this.context.clearRect(0, 0, canvas_size, canvas_size);
         this.context.save();
         this.context.translate(canvas_size / 2, canvas_size / 2);
-        for (let row = -half_canvas_cell; row <= half_canvas_cell; row++) {
-            for (let column = -half_canvas_cell; column <= half_canvas_cell; column++) {
+        for (let row = this.row_offset + (half_canvas_cell * -1); row <= this.row_offset + half_canvas_cell; row++) {
+            for (let column = this.column_offset + (half_canvas_cell * - 1); column <= this.column_offset + half_canvas_cell; column++) {
                 const value = this.coordinates_to_value(row, column);
                 const is_prime: boolean = this.is_prime(value);
-                new Cell(is_prime, (column * this.cell_size) + 2, (row * this.cell_size) + 2, this.cell_size).draw(this.context);
+                new Cell(is_prime, (column - this.column_offset) * this.cell_size, (row - this.row_offset) * this.cell_size, this.cell_size).draw(this.context);
             }
         }
         this.context.restore();
@@ -86,10 +91,16 @@ class Application {
 document.addEventListener("DOMContentLoaded", () => {
     const cell_size_field = document.getElementById("cell-size") as HTMLInputElement;
     cell_size_field.value = "1";
+    const row_field = document.getElementById("row") as HTMLInputElement;
+    row_field.value = "0";
+    const column_field = document.getElementById("column") as HTMLInputElement;
+    column_field.value = "0";
     new Application();
 });
 
 let handle_controls = () => {
     const cell_size_field = document.getElementById("cell-size") as HTMLInputElement;
-    new Application(parseInt(cell_size_field.value));
+    const row_field = document.getElementById("row") as HTMLInputElement;
+    const column_field = document.getElementById("column") as HTMLInputElement;
+    new Application(parseInt(row_field.value), parseInt(column_field.value), parseInt(cell_size_field.value));
 }
