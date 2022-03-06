@@ -6,6 +6,8 @@ This particular implementation supports the ability to generate spirals that do 
 
 To use this clone this repository and compile with TypeScript.
 
+Or alternatively view it in your browser [https://jackhodgkiss.github.io/prime-spiral/](https://jackhodgkiss.github.io/prime-spiral/)
+
 ![Prime Spiral @ 0, 0](assets/0x0.png)
 
 *Spiral Centered @ (0, 0)*
