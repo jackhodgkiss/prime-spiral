@@ -1,6 +1,6 @@
 # Prime Spirals
 
-This is a TypeScript implementation of Prime Spirals also known as Ulam's Spiral. More information can be found here: [https://www.youtube.com/watch?v=a35KWEjRvc0](The Coding Train), [https://www.youtube.com/watch?v=iFuR97YcSLM](Numberphile) & [https://en.wikipedia.org/wiki/Ulam_spiral](Wikipedia).
+This is a TypeScript implementation of Prime Spirals also known as Ulam's Spiral. More information can be found here: [The Coding Train](https://www.youtube.com/watch?v=a35KWEjRvc0), [Numberphile](https://www.youtube.com/watch?v=iFuR97YcSLM) & [Wikipedia](https://en.wikipedia.org/wiki/Ulam_spiral)
 
 This particular implementation supports the ability to generate spirals that do not center around zero. So if you desire to generate a segment of the spiral 100 Million numbers away from 1 then you can. This possible as the spiral is generated using an algorithm capable of converting rows & columns into a number on the spiral.
 
